@@ -1,0 +1,21 @@
+<div class="container">
+  <h3><span class="label label-default">Todo Add</span></h3>
+  <div class="form-group">
+    <label for="usr">Todo Text:</label>
+    <input type="text" class="form-control" [(ngModel)]="todoText">
+    <button type="button" class="btn" (click)="addTodo();">Todo Add</button>
+  </div>
+  <hr>
+  <h3><span class="label label-default">Todo List</span></h3>
+  <div class="row" *ngFor="let todo of todos;let i = index">
+    <div class="card card-block">
+      <h4 class="card-title">{{ todo.name }}</h4>
+        <div *ngIf="i == editActivatedForIndex">
+            <input type="text" [(ngModel)]="todoEditText" />
+            <button type="button" class="btn btn-primary" (click)="editTodo(todo.name,todoEditText);">Done</button>
+        </div>
+      <button *ngIf="i != editActivatedForIndex" type="button" class="btn btn-primary" (click)="activateEdit(i)">Edit</button>
+      <button type="button" class="btn btn-danger" (click)="deleteTodo(todo.name,i);">Delete</button>
+    </div>
+  </div>
+</div>
