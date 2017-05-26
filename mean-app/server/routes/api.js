@@ -5,6 +5,8 @@ const router = express.Router();
 const axios = require('axios');
 const API = 'https://jsonplaceholder.typicode.com';
 
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 //declare mongo for db access
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/mean-dev');
@@ -88,6 +90,43 @@ todo_collection.remove({"name":req.body.todotext},function(err,todo){
   }
 })
 
+});
+
+router.post('/login', passport.authenticate('local'), function(req, res) {
+    res.redirect('/');
+});
+
+// router.post('/login',function(req, res){
+// passport.use(new LocalStrategy(
+//   function(username, password, done) {
+//     User.findOne({ username: username }, function (err, user) {
+//       if (err) { return done(err); }
+//       if (!user) {
+//         return done(null, false, { message: 'Incorrect username.' });
+//       }
+//       if (!user.validPassword(password)) {
+//         return done(null, false, { message: 'Incorrect password.' });
+//       }
+//       return done(null, user);
+//     });
+//   }
+// ));
+// });
+
+router.post('/register', function(req, res) {
+  User.register(new User({ username: req.body.username }),
+    req.body.password, function(err, account) {
+    if (err) {
+      return res.status(500).json({
+        err: err
+      });
+    }
+    passport.authenticate('local')(req, res, function () {
+      return res.status(200).json({
+        status: 'Registration successful!'
+      });
+    });
+  });
 });
 
 module.exports = router;

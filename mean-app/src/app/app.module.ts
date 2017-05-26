@@ -7,14 +7,20 @@ import { AppComponent } from './app.component';
 import { PostsComponent } from './posts/posts.component';
 import { PostsService } from './posts.service';
 import { TodoService } from './todo.service';
+import { LoginService } from './login.service';
 import { TodoComponent } from './todo/todo.component';
+import { LoginComponent } from './login/login.component';
 
 // Define the routes
 const ROUTES = [
   {
     path: '',
-    redirectTo: 'todos',
+    redirectTo: 'login',
     pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: 'posts',
@@ -30,7 +36,8 @@ const ROUTES = [
   declarations: [
     AppComponent,
     PostsComponent,
-    TodoComponent
+    TodoComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +45,7 @@ const ROUTES = [
     HttpModule,
     RouterModule.forRoot(ROUTES) // Add routes to the app
   ],
-  providers: [PostsService, TodoService],
+  providers: [PostsService, TodoService, LoginService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

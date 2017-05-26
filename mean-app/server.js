@@ -8,6 +8,16 @@ const bodyParser = require('body-parser');
 const api = require('./server/routes/api');
 
 const app = express();
+var passport = require('passport');
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+app.use(require('express-session')({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Parsers for POST data
 app.use(bodyParser.json());
